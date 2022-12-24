@@ -8,13 +8,13 @@ with atheris.instrument_imports():
     from tinytag import TinyTag
 
 from tinytag.tinytag import TinyTagException
-
+import struct
 def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
     try:
         with fdp.ConsumeTemporaryFile('.mp3', all_data=True, as_bytes=True) as tag:
             TinyTag.get(tag)
-    except TinyTagException:
+    except (TinyTagException, struct.error):
         return -1
 
 def main():
