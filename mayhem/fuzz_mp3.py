@@ -7,10 +7,15 @@ import fuzz_helpers
 with atheris.instrument_imports():
     from tinytag import TinyTag
 
+from tinytag.tinytag import TinyTagException
+
 def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
-    with fdp.ConsumeTemporaryFile('.mp3', all_data=True, as_bytes=True) as tag:
-        TinyTag.get(tag)
+    try:
+        with fdp.ConsumeTemporaryFile('.mp3', all_data=True, as_bytes=True) as tag:
+            TinyTag.get(tag)
+    except TinyTagException:
+        return -1
 
 def main():
     atheris.Setup(sys.argv, TestOneInput)
