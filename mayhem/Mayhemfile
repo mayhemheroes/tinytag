@@ -1,0 +1,9 @@
+project: tinytag
+target: fuzz-mp3
+testsuite:
+    - file://mayhem/testsuite
+
+cmds:
+  - cmd: /src/mayhem/fuzz_mp3.py
+    libfuzzer: true
+    timeout: 12
